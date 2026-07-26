@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text;
 using System.Text.Json;
 using ModelContextProtocol.Protocol;
 using ModelContextProtocol.Server;
@@ -312,7 +313,10 @@ internal static class CaptureTools
             {
                 content.Add(new ImageContentBlock
                 {
-                    Data = File.ReadAllBytes(image.Path),
+                    // Data carries the base64 payload as UTF-8 bytes — the serializer decodes it
+                    // straight into the JSON string. Passing raw file bytes here emits mojibake
+                    // that clients reject as an invalid base64 string.
+                    Data = Encoding.UTF8.GetBytes(Convert.ToBase64String(File.ReadAllBytes(image.Path))),
                     MimeType = image.MimeType,
                 });
             }
