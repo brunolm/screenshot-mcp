@@ -54,13 +54,13 @@ class, handle, bounds). Use it to pick a target before capturing.
 ```powershell
 git clone https://github.com/brunolm/screenshot-mcp.git
 cd screenshot-mcp
-dotnet publish src/ScreenshotMcp -c Release
+dotnet publish src/ScreenshotMcp -c Release -o publish
 ```
 
 Then register the published executable:
 
 ```powershell
-claude mcp add screenshot -- "<repo>\src\ScreenshotMcp\bin\Release\net9.0-windows\win-x64\publish\screenshot-mcp.exe"
+claude mcp add screenshot --scope user -- "<repo>\publish\screenshot-mcp.exe"
 ```
 
 Or in an MCP client config file:
@@ -69,7 +69,7 @@ Or in an MCP client config file:
 {
   "mcpServers": {
     "screenshot": {
-      "command": "C:\\path\\to\\screenshot-mcp\\src\\ScreenshotMcp\\bin\\Release\\net9.0-windows\\win-x64\\publish\\screenshot-mcp.exe"
+      "command": "C:\\path\\to\\screenshot-mcp\\publish\\screenshot-mcp.exe"
     }
   }
 }
