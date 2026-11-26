@@ -35,6 +35,7 @@ internal static class ImageStore
         bool jpeg = format.Equals("jpeg", StringComparison.OrdinalIgnoreCase)
             || format.Equals("jpg", StringComparison.OrdinalIgnoreCase);
 
+        Prune();
         Directory.CreateDirectory(Root);
         string path = Path.Combine(Root, $"{name}.{(jpeg ? "jpg" : "png")}");
 
@@ -61,7 +62,7 @@ internal static class ImageStore
     }
 
     /// <summary>Deletes captures older than the retention period so the temp folder cannot grow without bound.</summary>
-    internal static void Prune()
+    private static void Prune()
     {
         try
         {
